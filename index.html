@@ -1,28 +1,141 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Soham Ghadge</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Soham Ghadge | Portfolio</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-    h1 { color: #2c3e50; }
-    p { color: #555; }
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #fff;
+      color: #111;
+      line-height: 1.6;
+    }
+    header {
+      text-align: center;
+      padding: 100px 20px 60px;
+      border-bottom: 1px solid #eee;
+    }
+    header h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #555;
+    }
+    section {
+      max-width: 900px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+    section h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    section p {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    ul {
+      list-style: none;
+      margin-top: 20px;
+    }
+    ul li {
+      font-size: 1.1rem;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .skills span {
+      display: inline-block;
+      background: #f2f2f2;
+      padding: 8px 16px;
+      margin: 6px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+    }
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      border-top: 1px solid #eee;
+      font-size: 0.95rem;
+      color: #666;
+    }
+    footer a {
+      color: #0071e3;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
-  <h1>👋 Hi, I’m Soham Ghadge</h1>
-  <p>Software Developer | MSc AI/ML Student</p>
-  <h2>🚀 Projects</h2>
-  <ul>
-    <li>BillSnap – Smart bill & expense tracking</li>
-    <li>Blockchain Voting System – Secure voting platform</li>
-    <li>Fraud Prevention System – AI + Blockchain</li>
-    <li>Event Management System – Role-based platform</li>
-  </ul>
-  <h2>🌐 Connect with Me</h2>
-  <p>
-    <a href="mailto:soham.ghadge@example.com">Email</a> |
-    <a href="https://linkedin.com/in/soham-ghadge">LinkedIn</a> |
-    <a href="https://twitter.com/sohamghadge">Twitter</a>
-  </p>
+
+  <!-- Header -->
+  <header>
+    <h1>👋 Hi, I’m Soham Ghadge</h1>
+    <p>Software Developer · MSc AI/ML Student</p>
+  </header>
+
+  <!-- About -->
+  <section>
+    <h2>About Me</h2>
+    <p>
+      I’m a software developer and AI/ML postgraduate student, passionate about building 
+      secure, scalable, and user-friendly applications. My expertise spans backend development, 
+      frontend design, AI/ML integration, and cloud computing.
+    </p>
+  </section>
+
+  <!-- Projects -->
+  <section>
+    <h2>Projects</h2>
+    <ul>
+      <li><strong>BillSnap</strong> – Smart bill & expense tracking</li>
+      <li><strong>Blockchain Voting System</strong> – Secure, transparent digital voting</li>
+      <li><strong>Fraud Prevention System</strong> – AI + Blockchain for fraud detection</li>
+      <li><strong>Event Management System</strong> – Role-based event platform</li>
+      <li><strong>Cloud Computing Research</strong> – Practical cloud applications & case studies</li>
+    </ul>
+  </section>
+
+  <!-- Skills -->
+  <section>
+    <h2>Skills</h2>
+    <div class="skills">
+      <span>Java</span>
+      <span>Spring Boot</span>
+      <span>Python</span>
+      <span>React (Vite)</span>
+      <span>PostgreSQL</span>
+      <span>Firebase</span>
+      <span>Docker</span>
+      <span>Cloud Computing</span>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section>
+    <h2>Connect</h2>
+    <p>Let’s connect and collaborate:</p>
+    <p>
+      📧 <a href="mailto:soham.ghadge@example.com">soham.ghadge@example.com</a><br />
+      🔗 <a href="https://linkedin.com/in/soham-ghadge" target="_blank">LinkedIn</a> · 
+      🐦 <a href="https://twitter.com/sohamghadge" target="_blank">Twitter</a>
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Soham Ghadge · Built with ❤️ on GitHub Pages</p>
+  </footer>
+
 </body>
 </html>
