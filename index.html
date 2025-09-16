@@ -526,61 +526,67 @@
   </footer>
 
   <button class="theme-toggle" id="theme-toggle">☀️</button>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Intersection Observer for scroll animations
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            if (entry.target.classList.contains('skill-item')) {
-              entry.target.style.animationDelay = `${(parseInt(entry.target.dataset.index) * 0.05) + 0.1}s`;
-            }
-            observer.unobserve(entry.target);
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          if (entry.target.classList.contains('skill-item')) {
+            entry.target.style.animationDelay = `${(parseInt(entry.target.dataset.index) * 0.05) + 0.1}s`;
           }
-        });
-      }, { threshold: 0.1 });
-
-      document.querySelectorAll('.animate-on-scroll').forEach((el) => {
-        observer.observe(el);
-      });
-
-      // Assign index for staggered skills animation
-      const skillItems = document.querySelectorAll('.skills-list li');
-      skillItems.forEach((el, index) => {
-        el.dataset.index = index;
-      });
-
-      // Theme toggle functionality
-      const themeToggle = document.getElementById('theme-toggle');
-      const body = document.body;
-      const currentTheme = localStorage.getItem('theme');
-
-      if (!currentTheme) {
-        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-          body.classList.add('light-mode');
-          themeToggle.textContent = '🌙';
-        }
-      } else {
-        body.classList.add(currentTheme);
-        themeToggle.textContent = (currentTheme === 'light-mode') ? '🌙' : '☀️';
-      }
-
-      themeToggle.addEventListener('click', () => {
-        const isLightMode = body.classList.contains('light-mode');
-        if (isLightMode) {
-          body.classList.remove('light-mode');
-          localStorage.setItem('theme', 'dark-mode');
-          themeToggle.textContent = '☀️';
-        } else {
-          body.classList.add('light-mode');
-          localStorage.setItem('theme', 'light-mode');
-          themeToggle.textContent = '🌙';
+          observer.unobserve(entry.target);
         }
       });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+      observer.observe(el);
     });
-  </script>
+
+    // Assign index for staggered skills animation
+    const skillItems = document.querySelectorAll('.skills-list li');
+    skillItems.forEach((el, index) => {
+      el.dataset.index = index;
+    });
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    let currentTheme = localStorage.getItem('theme');
+
+    // ✅ Always default to dark if no saved theme
+    if (!currentTheme) {
+      currentTheme = "dark-mode";
+      localStorage.setItem("theme", currentTheme);
+    }
+
+    // Apply saved theme
+    if (currentTheme === "light-mode") {
+      body.classList.add("light-mode");
+      themeToggle.textContent = "🌙";
+    } else {
+      body.classList.remove("light-mode");
+      themeToggle.textContent = "☀️";
+    }
+
+    // Toggle on click
+    themeToggle.addEventListener("click", () => {
+      const isLightMode = body.classList.contains("light-mode");
+      if (isLightMode) {
+        body.classList.remove("light-mode");
+        localStorage.setItem("theme", "dark-mode");
+        themeToggle.textContent = "☀️";
+      } else {
+        body.classList.add("light-mode");
+        localStorage.setItem("theme", "light-mode");
+        themeToggle.textContent = "🌙";
+      }
+    });
+  });
+</script>
+
 </body>
 
 </html>
