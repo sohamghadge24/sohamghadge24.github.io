@@ -1,141 +1,574 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Soham Ghadge | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* Reset */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* ===============================
+       CSS Variables
+    =============================== */
+    :root {
+      --bg-color: #0d1117;
+      --main-text-color: #c9d1d9;
+      --secondary-text-color: #8b949e;
+      --accent-color: #238636;
+      --card-bg-color: #161b22;
+      --card-border-color: #30363d;
+      --link-color: #58a6ff;
+      --font-stack: 'Inter', sans-serif;
+      --gradient-dark: linear-gradient(45deg, #16e53e, #6dd5ed);
+      --gradient-light: linear-gradient(45deg, #2da44e, #0969da); /* Added gradient for light mode */
+    }
+
+    body.light-mode {
+      --bg-color: #f5f7fa;
+      --main-text-color: #1c1e21;
+      --secondary-text-color: #606770;
+      --accent-color: #2da44e;
+      --card-bg-color: #ffffff;
+      --card-border-color: #d0d7de;
+      --link-color: #0969da;
+    }
+
+    body.light-mode .project-item,
+    body.light-mode .experience-item,
+    body.light-mode .skills-list li {
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    body.light-mode .project-item:hover,
+    body.light-mode .experience-item:hover,
+    body.light-mode .skills-list li:hover {
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    /* ===============================
+       Reset & General Styles
+    =============================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #fff;
-      color: #111;
+      font-family: var(--font-stack);
+      background: var(--bg-color);
+      color: var(--main-text-color);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      padding-top: 200px;
+      transition: background-color 0.5s ease,
+        color 0.5s ease;
     }
-    header {
-      text-align: center;
-      padding: 100px 20px 60px;
-      border-bottom: 1px solid #eee;
-    }
-    header h1 {
-      font-size: 3rem;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
-    header p {
-      font-size: 1.2rem;
-      color: #555;
-    }
-    section {
-      max-width: 900px;
-      margin: 80px auto;
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
       padding: 0 20px;
     }
-    section h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
+
+    .section-heading {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid var(--accent-color);
+      padding-bottom: 0.5rem;
+      transition: border-bottom-color 0.8s ease;
+    }
+
+    body.light-mode .section-heading {
+      color: #111827;
+      border-bottom-color: var(--accent-color);
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .grid-container {
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .grid-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .project-item,
+    .experience-item,
+    .skills-list li {
+      transition: all 0.35s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* ===============================
+       Header
+    =============================== */
+    header {
+      
+      text-align: center;
+      padding: 50px 20px 40px;
+      background: linear-gradient(180deg, var(--bg-color) 0%, rgba(20, 30, 40, 0.9) 100%);
+      animation: fadeIn 1.5s ease-out;
+      transition: background 0.8s ease;
+    }
+
+    body.light-mode header {
+      background: linear-gradient(180deg, var(--bg-color) 0%, rgba(255, 255, 255, 0.9) 100%);
+    }
+
+    header h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    header p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--secondary-text-color);
+      opacity: 0;
+      animation: fadeUp 1.2s 0.4s forwards;
+      transition: color 0.8s ease;
+    }
+
+    /* ===============================
+       Animated Headings
+    =============================== */
+    .animated-heading {
+      background: var(--gradient-dark);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 200%;
+      animation: gradientMove 6s ease infinite;
+      transition: background 0.8s ease;
+    }
+
+    body.light-mode .animated-heading {
+      background: var(--gradient-light);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* ===============================
+       Scroll Animations
+    =============================== */
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .animate-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===============================
+       Sections
+    =============================== */
+    section {
+      padding: 80px 0;
+    }
+
+    .project-item,
+    .experience-item {
+      background: var(--card-bg-color);
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--card-border-color);
+      transition: all 0.35s ease, transform 0.45s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+    }
+
+    .project-item:hover,
+    .experience-item:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: var(--accent-color);
+      box-shadow: 0 10px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    .project-item h3,
+    .experience-item h3 {
+      font-size: 1.5rem;
       font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--link-color);
+      transition: color 0.8s ease;
     }
-    section p {
-      font-size: 1.1rem;
-      color: #333;
-      margin-bottom: 20px;
+
+    .experience-item p.time-frame {
+      font-style: italic;
+      margin-top: 0.5rem;
     }
-    ul {
+
+    /* ===============================
+       Skills Section
+    =============================== */
+    .skills-list {
       list-style: none;
-      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
     }
-    ul li {
-      font-size: 1.1rem;
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-    }
-    .skills span {
-      display: inline-block;
-      background: #f2f2f2;
+
+    .skills-list li {
+      background: var(--card-bg-color);
+      color: var(--main-text-color);
       padding: 8px 16px;
-      margin: 6px;
       border-radius: 20px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      transition: all 0.3s ease, transform 0.4s ease;
+      opacity: 0;
+      transform: scale(0.95);
+      border: 1px solid var(--card-border-color);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+      cursor: default;
     }
+
+    .skills-list li.is-visible {
+      opacity: 1;
+      transform: scale(1);
+      animation: popIn 0.6s ease forwards;
+    }
+
+    .skills-list li:hover {
+      transform: translateY(-6px) scale(1.05);
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+      box-shadow: 0 8px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    /* ===============================
+       Contact Section
+    =============================== */
+    .contact-info a {
+      color: var(--link-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .contact-info a:hover {
+      color: #79c0ff;
+    }
+
+    .social-links {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+
+    .social-links a {
+      font-size: 1rem;
+      color: var(--main-text-color);
+      text-decoration: none;
+      transition: color 0.4s ease, transform 0.4s ease;
+    }
+
+    .social-links a:hover {
+      color: var(--accent-color);
+      transform: translateY(-3px) scale(1.05);
+    }
+
+    /* ===============================
+       Footer
+    =============================== */
     footer {
       text-align: center;
       padding: 40px 20px;
-      border-top: 1px solid #eee;
-      font-size: 0.95rem;
-      color: #666;
+      border-top: 1px solid var(--card-border-color);
+      font-size: 0.85rem;
+      color: var(--secondary-text-color);
+      animation: fadeIn 1.2s ease-out;
+      transition: all 0.8s ease;
     }
-    footer a {
-      color: #0071e3;
-      text-decoration: none;
-      margin: 0 10px;
+
+    /* ===============================
+       Theme Toggle
+    =============================== */
+    .theme-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      background: var(--card-bg-color);
+      color: var(--main-text-color);
+      cursor: pointer;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+      transition: background-color 0.4s ease, transform 0.25s ease, box-shadow 0.3s ease, color 0.4s ease;
     }
-    footer a:hover {
-      text-decoration: underline;
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ===============================
+       Animations
+    =============================== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes gradientMove {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.85);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
     }
   </style>
 </head>
+
 <body>
 
-  <!-- Header -->
   <header>
-    <h1>👋 Hi, I’m Soham Ghadge</h1>
-    <p>Software Developer · MSc AI/ML Student</p>
+    <div class="container">
+      <h1 class="animated-heading">Soham Ghadge</h1>
+      <p>
+        MSc Artificial Intelligence & Machine Learning Student<br />
+        Full-Stack Developer
+      </p>
+    </div>
   </header>
 
-  <!-- About -->
-  <section>
-    <h2>About Me</h2>
-    <p>
-      I’m a software developer and AI/ML postgraduate student, passionate about building 
-      secure, scalable, and user-friendly applications. My expertise spans backend development, 
-      frontend design, AI/ML integration, and cloud computing.
-    </p>
-  </section>
-
-  <!-- Projects -->
-  <section>
-    <h2>Projects</h2>
-    <ul>
-      <li><strong>BillSnap</strong> – Smart bill & expense tracking</li>
-      <li><strong>Blockchain Voting System</strong> – Secure, transparent digital voting</li>
-      <li><strong>Fraud Prevention System</strong> – AI + Blockchain for fraud detection</li>
-      <li><strong>Event Management System</strong> – Role-based event platform</li>
-      <li><strong>Cloud Computing Research</strong> – Practical cloud applications & case studies</li>
-    </ul>
-  </section>
-
-  <!-- Skills -->
-  <section>
-    <h2>Skills</h2>
-    <div class="skills">
-      <span>Java</span>
-      <span>Spring Boot</span>
-      <span>Python</span>
-      <span>React (Vite)</span>
-      <span>PostgreSQL</span>
-      <span>Firebase</span>
-      <span>Docker</span>
-      <span>Cloud Computing</span>
+  <section id="about">
+    <div class="container">
+      <h2 class="section-heading animated-heading animate-on-scroll">About Me</h2>
+      <p class="animate-on-scroll">
+        I'm a passionate and motivated postgraduate student with a strong foundation in both <strong>Artificial
+        Intelligence</strong> and <strong>Full-Stack Development</strong>. With hands-on experience in building secure, scalable, and
+        user-centric applications, I am adept at applying emerging technologies like AI, machine learning, and cloud
+        computing to solve real-world problems.
+      </p>
+      <p class="animate-on-scroll">
+        My skills span across backend development with <strong>Java</strong> and <strong>Python</strong>, to front-end design with <strong>React</strong>, and
+        database management. I am driven by a desire to learn continuously and deliver innovative, user-focused solutions.
+      </p>
     </div>
   </section>
 
-  <!-- Contact -->
-  <section>
-    <h2>Connect</h2>
-    <p>Let’s connect and collaborate:</p>
-    <p>
-      📧 <a href="mailto:soham.ghadge@example.com">soham.ghadge@example.com</a><br />
-      🔗 <a href="https://linkedin.com/in/soham-ghadge" target="_blank">LinkedIn</a> · 
-      🐦 <a href="https://twitter.com/sohamghadge" target="_blank">Twitter</a>
-    </p>
+  <section id="experience">
+    <div class="container">
+      <h2 class="section-heading animated-heading animate-on-scroll">Experience</h2>
+      <div class="experience-item animate-on-scroll">
+        <h3 class="animated-heading">Java Development Intern</h3>
+        <p>Oasis Infobyte</p>
+        <p class="time-frame">January 2024 - February 2024</p>
+        <p>
+          Built robust backend applications using <strong>Java</strong>, significantly enhancing system efficiency. Collaborated with a
+          small, agile development team, managing tasks both independently and within a group framework to deliver
+          project goals.
+        </p>
+      </div>
+    </div>
   </section>
 
-  <!-- Footer -->
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-heading animated-heading animate-on-scroll">Projects</h2>
+      <div class="grid-container">
+        <div class="project-item animate-on-scroll">
+          <h3 class="animated-heading">Traffic Optimization System (Ongoing)</h3>
+          <p>
+            Currently developing an AI-powered system designed to optimize traffic flow and reduce congestion in urban
+            environments.
+          </p>
+        </div>
+        <div class="project-item animate-on-scroll">
+          <h3 class="animated-heading">BillSnap - Smart Expense Management App</h3>
+          <p>
+            A comprehensive expense tracking application with receipt scanning capabilities. Developed using a modern tech
+            stack including <strong>React</strong>, <strong>TypeScript</strong>, <strong>Tailwind CSS</strong>, and <strong>Firebase</strong>.
+            <a href="https://billsnap-project.vercel.app">Project Link</a>
+          </p>
+        </div>
+        <div class="project-item animate-on-scroll">
+          <h3 class="animated-heading">Blockchain Voting System</h3>
+          <p>
+            A secure and transparent digital voting platform built on blockchain technology to ensure integrity and
+            prevent tampering.
+          </p>
+        </div>
+        
+        
+        <div class="project-item animate-on-scroll">
+          <h3 class="animated-heading">Cloud Computing Research & Report</h3>
+          <p>
+            Authored a detailed technical study on cloud computing, covering various applications, deployment models, and
+            case studies.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-heading animated-heading animate-on-scroll">Skills</h2>
+      <ul class="skills-list">
+        <li class="skill-item animate-on-scroll">Strong analytical & problem-solving</li>
+        <li class="skill-item animate-on-scroll">Persistent & resilient attitude</li>
+        <li class="skill-item animate-on-scroll">Java</li>
+        <li class="skill-item animate-on-scroll">Python</li>
+        <li class="skill-item animate-on-scroll">C++ (basic)</li>
+        <li class="skill-item animate-on-scroll">Spring Boot</li>
+        <li class="skill-item animate-on-scroll">React.js (Vite)</li>
+        <li class="skill-item animate-on-scroll">MySQL</li>
+        <li class="skill-item animate-on-scroll">MongoDB</li>
+        <li class="skill-item animate-on-scroll">H2 Database</li>
+        <li class="skill-item animate-on-scroll">TensorFlow</li>
+        <li class="skill-item animate-on-scroll">PyTorch</li>
+        <li class="skill-item animate-on-scroll">Scikit-learn</li>
+        <li class="skill-item animate-on-scroll">Pandas</li>
+        <li class="skill-item animate-on-scroll">NumPy</li>
+        <li class="skill-item animate-on-scroll">Blockchain (Ganache)</li>
+        <li class="skill-item animate-on-scroll">Firebase</li>
+        <li class="skill-item animate-on-scroll">AWS (basics)</li>
+        <li class="skill-item animate-on-scroll">Google Cloud (basics)</li>
+        <li class="skill-item animate-on-scroll">Google Workspace</li>
+        <li class="skill-item animate-on-scroll">Git</li>
+        <li class="skill-item animate-on-scroll">Docker</li>
+        <li class="skill-item animate-on-scroll">Version control practices</li>
+        <li class="skill-item animate-on-scroll">Effective communication</li>
+        <li class="skill-item animate-on-scroll">Teamwork</li>
+        <li class="skill-item animate-on-scroll">Organizational abilities</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-heading animated-heading animate-on-scroll">Connect</h2>
+      <div class="contact-info">
+        <p class="animate-on-scroll">
+          Let's connect and collaborate on future projects. Feel free to reach out to me via email or social media.
+        </p>
+        <p class="animate-on-scroll">
+          <strong>Email:</strong> <a href="mailto:sohamghadge7900@gmail.com">sohamghadge7900@gmail.com</a><br />
+          <strong>Mobile:</strong> (+91) 97692 23892
+        </p>
+        <div class="social-links animate-on-scroll">
+          <a href="https://www.linkedin.com/in/soham-ghadge-00622b1a8/" target="_blank">LinkedIn</a>
+          <a href="https://twitter.com/sohamghadge" target="_blank">Twitter</a>
+          <a href="https://github.com/sohamghadge24" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    <p>© 2025 Soham Ghadge · Built with ❤️ on GitHub Pages</p>
+    <div class="container">
+      <p>© 2025 Soham Ghadge · Built with ❤️ on GitHub Pages</p>
+    </div>
   </footer>
 
+  <button class="theme-toggle" id="theme-toggle">☀️</button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Intersection Observer for scroll animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            if (entry.target.classList.contains('skill-item')) {
+              entry.target.style.animationDelay = `${(parseInt(entry.target.dataset.index) * 0.05) + 0.1}s`;
+            }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+        observer.observe(el);
+      });
+
+      // Assign index for staggered skills animation
+      const skillItems = document.querySelectorAll('.skills-list li');
+      skillItems.forEach((el, index) => {
+        el.dataset.index = index;
+      });
+
+      // Theme toggle functionality
+      const themeToggle = document.getElementById('theme-toggle');
+      const body = document.body;
+      const currentTheme = localStorage.getItem('theme');
+
+      if (!currentTheme) {
+        if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+          body.classList.add('light-mode');
+          themeToggle.textContent = '🌙';
+        }
+      } else {
+        body.classList.add(currentTheme);
+        themeToggle.textContent = (currentTheme === 'light-mode') ? '🌙' : '☀️';
+      }
+
+      themeToggle.addEventListener('click', () => {
+        const isLightMode = body.classList.contains('light-mode');
+        if (isLightMode) {
+          body.classList.remove('light-mode');
+          localStorage.setItem('theme', 'dark-mode');
+          themeToggle.textContent = '☀️';
+        } else {
+          body.classList.add('light-mode');
+          localStorage.setItem('theme', 'light-mode');
+          themeToggle.textContent = '🌙';
+        }
+      });
+    });
+  </script>
 </body>
+
 </html>
