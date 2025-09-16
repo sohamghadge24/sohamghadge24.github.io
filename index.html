@@ -191,6 +191,18 @@
       border-color: var(--accent-color);
       box-shadow: 0 10px 18px rgba(0, 0, 0, 0.4);
     }
+     .project-item a {
+      font-size: 1rem;
+      color: var(--accent-color);
+      
+      text-decoration: none;
+      transition: color 0.4s ease, transform 0.4s ease;
+    }
+
+    .project-item a:hover {
+      color: var(--main-text-color);
+      transform: translateY(-3px) scale(1.05);
+    }
 
     .project-item h3,
     .experience-item h3 {
@@ -430,7 +442,7 @@
           <p>
             A comprehensive expense tracking application with receipt scanning capabilities. Developed using a modern tech
             stack including <strong>React</strong>, <strong>TypeScript</strong>, <strong>Tailwind CSS</strong>, and <strong>Firebase</strong>.
-            <a href="https://billsnap-project.vercel.app">Project Link</a>
+            <a href="https://billsnap-project.vercel.app" target="_blank">Project Link</a>
           </p>
         </div>
         <div class="project-item animate-on-scroll">
